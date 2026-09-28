@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#356b31">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Mi Cocina">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Mi Cocina — Inventario</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">🍳 <span>Mi Cocina</span></div>
+    <nav>
+      <button class="nav active" data-view="dashboard">🏠 Dashboard</button>
+      <button class="nav" data-view="inventory">📦 Inventario</button>
+      <button class="nav" data-view="shopping">🛒 Lista de compras</button>
+    </nav>
+    <div class="side-note">Tu inventario doméstico, simple y organizado.</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">INVENTARIO DOMÉSTICO</div>
+        <h1 id="pageTitle">Dashboard</h1>
+      </div>
+      <button class="primary" id="addBtn">＋ Agregar producto</button>
+    </header>
+
+    <section id="dashboard" class="view">
+      <div class="cards">
+        <div class="card"><span>📦</span><div><b id="totalProducts">0</b><small>Productos</small></div></div>
+        <div class="card"><span>⚠️</span><div><b id="lowStock">0</b><small>Stock bajo</small></div></div>
+        <div class="card"><span>⏰</span><div><b id="expiring">0</b><small>Por vencer</small></div></div>
+        <div class="card"><span>🛒</span><div><b id="shoppingCount">0</b><small>Para comprar</small></div></div>
+      </div>
+
+      <div class="grid">
+        <div class="panel">
+          <div class="panel-head"><h2>Inventario reciente</h2><button class="link" data-go="inventory">Ver todo →</button></div>
+          <div id="recentList" class="product-list"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h2>⚠️ Atención</h2></div>
+          <div id="alerts"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="inventory" class="view hidden">
+      <div class="toolbar">
+        <input id="search" placeholder="🔎 Buscar producto..." />
+        <select id="categoryFilter"><option value="">Todas las categorías</option></select>
+      </div>
+      <div class="panel">
+        <div id="inventoryList" class="product-list"></div>
+      </div>
+    </section>
+
+    <section id="shopping" class="view hidden">
+      <div class="panel">
+        <div class="panel-head"><h2>Lista de compras</h2><button class="secondary" id="clearShopping">Limpiar lista</button></div>
+        <div id="shoppingList"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-head"><h2>Agregar producto</h2><button id="closeModal">✕</button></div>
+    <form id="productForm">
+      <label>Nombre<input name="name" required placeholder="Ej. Arroz"></label>
+      <div class="two">
+        <label>Cantidad<input name="qty" type="number" min="0" step="0.1" required></label>
+        <label>Unidad<select name="unit"><option>un.</option><option>kg</option><option>g</option><option>L</option><option>ml</option><option>paquete</option></select></label>
+      </div>
+      <div class="two">
+        <label>Categoría<select name="category">
+          <option>Granos</option><option>Frutas</option><option>Verduras</option><option>Carnes</option><option>Lácteos</option><option>Bebidas</option><option>Condimentos</option><option>Enlatados</option><option>Limpieza</option><option>Otros</option>
+        </select></label>
+        <label>Stock mínimo<input name="min" type="number" min="0" step="0.1" value="1"></label>
+      </div>
+      <div class="two">
+        <label>Ubicación<select name="location"><option>Despensa</option><option>Nevera</option><option>Congelador</option><option>Cocina</option><option>Otro</option></select></label>
+        <label>Vencimiento<input name="expiry" type="date"></label>
+      </div>
+      <button class="primary full">Guardar producto</button>
+    </form>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");</script>
+</body>
+</html>
